@@ -26,8 +26,11 @@ import apiUsers from 'src/api/usersService';
 
 
 const validationSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Old Password is required').matches( MESSAGE.PASSWORD),
-    newPassword: Yup.string().required('New Password is required').matches(PASSWORDS_REGEX, MESSAGE.PASSWORD),
+    oldPassword: Yup.string().required('Old Password is required'),
+    newPassword: Yup.string().notOneOf(
+        [Yup.ref('oldPassword'), null],
+        'New Password must be different'
+      ).required('New Password is required').matches(PASSWORDS_REGEX, MESSAGE.PASSWORD),
     confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match').required('Confirm Password is required'),
 });
 
@@ -69,7 +72,7 @@ export default function ChangePassword() {
         <CardContent>
         
         <FormikProvider value={formik} style={{padding: '34px 30px'}}>
-            <Typography variant="h3" sx={{ mb: 2 }} align="start">Change Password</Typography>
+            <Typography variant="h4" sx={{ mb: 2 }} align="start">Change Password</Typography>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Stack spacing={3}>
                 <TextField name="oldPassword" label="Old Password *" type='password' {...getFieldProps('oldPassword')} error={Boolean(touched.oldPassword && errors.oldPassword)} helperText={touched.oldPassword && errors.oldPassword} />

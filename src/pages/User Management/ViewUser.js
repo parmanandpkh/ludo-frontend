@@ -22,12 +22,12 @@ function capitalizeFirstLetter(string){
     return (
         
         <Dialog maxWidth="md" fullWidth={true} open={show} onClose={onHide}>
-            <DialogTitle>Details</DialogTitle>
+            <DialogTitle as="h2" >Details</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <Typography variant="subtitle1">Full Name</Typography>
-                        <DialogContentText>{capitalizeFirstLetter(data?.firstName )}{" "}{capitalizeFirstLetter(data?.lastsName)}</DialogContentText>
+                        <DialogContentText>{capitalizeFirstLetter(data?.firstName )}{" "}{capitalizeFirstLetter(data?.lastName)}</DialogContentText>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Typography variant="subtitle1">Email</Typography>
