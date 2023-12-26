@@ -105,15 +105,15 @@ function EditAboutUs() {
                         const data = editor?.getData()
                         formik.setFieldValue("aboutUsText", data);
                          }}
-                      //  config={{                          
-                      //   extraPlugins: "indentblock, divarea,justify",   
-                      //   filebrowserUploadUrl :("https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files"),                     
-                      //   customToolbar:
-                      //   [
-                      //   { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-', 'Attachments' ] },
-                      //   { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] }, 
-                      //   ]
-                      // }}
+                       config={{                          
+                        Plugins: "indentblock, divarea,justify",   
+                        filebrowserUploadUrl :("https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files"),                     
+                        customToolbar:
+                        [
+                        { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-', 'Attachments' ] },
+                        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] }, 
+                        ]
+                      }}
 
                     />
                   </>
