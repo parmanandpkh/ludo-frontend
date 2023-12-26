@@ -77,7 +77,7 @@ function GlobalSetting() {
       <Card>
         <CardContent>
           <FormikProvider value={formik} style={{ padding: "34px 30px" }}>
-            <Typography variant="h3" sx={{ mb: 2 }} align="start">
+            <Typography variant="h4" sx={{ mb: 2 }} align="start">
               Settings
             </Typography>
             <Form >

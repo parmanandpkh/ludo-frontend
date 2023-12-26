@@ -1,4 +1,4 @@
-export const API_BASE = 'https://ludo.devtechnosys.tech:17177/admin/';
+export const API_BASE = 'https://ludo.devtechnosys.tech/admin/';
 // export const API_BASE = "http://172.16.11.201:17164/api/"
 
 // export const BASE_API = API_BASE + "/api";
@@ -11,6 +11,8 @@ export const PASSWORDS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%^&*?])
 export const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z ]{2,}))$/;
 
 export const NOSPACE_REGEX = /^(?!\s+$).*/;
+
+export const NOSPACE_REGEX_EMAIL = /^(?=.{1,80}$)([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,})+$/
 
 export const NOSPACE = "Spaces are not allowed";
 

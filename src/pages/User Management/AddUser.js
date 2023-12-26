@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { toast } from "react-toastify";
 import { MESSAGE } from '../../utils/validationMessage';
 import apiAuth from '../../api/authService';
-import { MOBILE_REGEX, NOSPACE_REGEX, PASSWORDS_REGEX } from '../../utils/constants';
+import { MOBILE_REGEX, NOSPACE_REGEX, NOSPACE_REGEX_EMAIL, PASSWORDS_REGEX } from '../../utils/constants';
 import errorHandler from '../../utils/errorHandler';
 import SimpleLayout from 'src/layouts/simple/SimpleLayout';
 import apiUsers from 'src/api/usersService';
@@ -15,12 +15,12 @@ import { complexEmailRegex } from 'src/utils/emailCheck';
 
 
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX, MESSAGE.FIRSTNAME).max(30, 'FirstName character not more 30'),
-    lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX, MESSAGE.LASTNAME).max(30, 'LastName character not more 30'),
+    firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX).min(2, 'Write atleast 2 character').max(30, 'FirstName character not more 30'),
+    lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Write atleast 2 character').max(30, 'LastName character not more 30'),
     phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
    email: Yup.string()
     .required('Email is required')
-    .matches(NOSPACE_REGEX, MESSAGE.NO_SPACE)
+    .matches(NOSPACE_REGEX_EMAIL, MESSAGE.NO_SPACE)
     .test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
     .max(255),
 });
@@ -57,7 +57,7 @@ export default function AddUser() {
         <CardContent>
         
         <FormikProvider value={formik} style={{padding: '34px 30px'}}>
-            <Typography variant="h3" sx={{ mb: 2 }} align="start">Add User</Typography>
+            <Typography variant="h4" sx={{ mb: 2 }} align="start">Add User</Typography>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Stack spacing={3}>
                 <TextField name="firstName" label="First Name" {...getFieldProps('firstName')} error={Boolean(touched.firstName && errors.firstName)} helperText={touched.firstName && errors.firstName} />
