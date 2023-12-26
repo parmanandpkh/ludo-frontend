@@ -12,6 +12,7 @@ import { uploadAdapterPlugin } from "./Uploadadapter";
 import cmsService from "src/api/cmsService";
 import { Button } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import './CKEditorStyle.css' 
 // import { uploadAdapterPlugin } from '../Template/Uploadadapter';
 // import {tostE, tostS} from "../Toast"
 function EditAboutUs() {
@@ -66,7 +67,7 @@ function EditAboutUs() {
 });
   
     const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
- 
+   
   return (
     <Card className="p-0">
       <Card.Header>
@@ -91,6 +92,7 @@ function EditAboutUs() {
                     <CKEditor
                       editor={ClassicEditor}
                       data={data.form.values.aboutUsText}
+                      className="sarampeema"
                       onReady={(editor) => {
                         console.log("abc______", editor)
                        editor.editing.view.change((writer) => {
@@ -106,13 +108,23 @@ function EditAboutUs() {
                         formik.setFieldValue("aboutUsText", data);
                          }}
                        config={{                          
-                        Plugins: "indentblock, divarea,justify",   
-                        filebrowserUploadUrl :("https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files"),                     
-                        customToolbar:
-                        [
-                        { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-', 'Attachments' ] },
-                        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] }, 
-                        ]
+                        blockToolbar: {
+                          items: [ 'paragraph', 'heading1', 'heading2', '|', 'bulletedList', 'numberedList' ],
+                          shouldNotGroupWhenFull: true
+                        },
+                        ckfinder: {
+                          // Upload the images to the server using the CKFinder QuickUpload command.
+                          uploadUrl:
+                              // 'https://localhost:44374/api/v1/announcements/upload-file?command=QuickUpload&type=Images&responseType=json'
+                              'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+                        },
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
+                    
+                        table: {
+                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                        }
                       }}
 
                     />
