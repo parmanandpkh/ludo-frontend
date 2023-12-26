@@ -59,7 +59,7 @@ function UserManagement() {
     setCheck()
     const res = await apiUsers.changeStatus({ id, status:changeStatus });
     if(res?.data?.message)
-    {
+    {  
       toast.success(res?.data?.message)
     }else{
       toast.error(res?.data?.message)
@@ -89,7 +89,7 @@ function capitalizeFirstLetter(string){
       selector: (row) => row.phoneNumber,
     },
     {
-      name: "Date & Time",
+      name: "Created Date & Time",
       selector: (row) =>   <Moment format="DD/MM/YYYY  HH:MM A" >{row.createdAt}</Moment>,
     },
     {
@@ -119,17 +119,17 @@ function capitalizeFirstLetter(string){
       cell: (row) => (
         <>
           <Tooltip title="Edit" placement="top">
-            <IconButton color="info" >
-              <EditOutlined onClick={()=>{setEditId(row._id);
-              navigate('/dashboard/edit-user',{state:{id:row._id}})}} />
+            <IconButton color="info" onClick={()=>{setEditId(row._id);
+              navigate('/dashboard/edit-user',{state:{id:row._id}})}}>
+              <EditOutlined  />
             </IconButton>
           </Tooltip>
         
           <Tooltip title="View" placement="top">
-            <IconButton color="info" >
-              <VisibilityIcon  onClick={()=>{
+            <IconButton color="info"   onClick={()=>{
                 setModalShow(true);
-                setViewId(row._id)}}/>
+                setViewId(row._id)}}>
+              <VisibilityIcon />
             </IconButton>
           </Tooltip>
         </>
@@ -139,7 +139,9 @@ function capitalizeFirstLetter(string){
 
   return (
     <Card>
-      <CardHeader title="User Management" />
+      <CardHeader titleTypographyProps={{variant:'h4' }} title="User Management" >
+        
+        </CardHeader>
       <Box sx={{ display: "flex", alignItems:'center',justifyContent:'flex-end' }}>
               
               <TextField label="Search"  variant="standard" onChange={(e)=>setSearchItem(e.target.value)}  />
@@ -162,7 +164,7 @@ function capitalizeFirstLetter(string){
           }}
           />
       </CardContent>
-      {viewId?<ViewUserDetail show={modalShow} onHide={() => setModalShow(false)} id={viewId} />:''}
+      {modalShow?<ViewUserDetail show={modalShow} onHide={() => setModalShow(false)} id={viewId} />:''}
     </Card>
   );
 }
