@@ -22,7 +22,18 @@ const PrivacyPolicy = () => {
       useEffect(()=>{
         PrivacyPolicyData()
       },[])
-
+      const addTargetAttribute = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = doc.querySelectorAll('a');
+        links.forEach((link) => {
+          link.setAttribute('target', '_blank');
+          // You can add other attributes as needed
+        });
+        return doc.body.innerHTML;
+      };
+    
+      const sanitizedHTML = addTargetAttribute(detail?.privacyText);
   
   return (
   <MCard className="overflow-hidden text-wrap col-6">
@@ -39,7 +50,7 @@ const PrivacyPolicy = () => {
             {detail && (
             <div className="row">
                 <div className="" >
-                <Typography variant="h6" dangerouslySetInnerHTML={{__html:detail?.privacyText}}>
+                <Typography variant="h6" dangerouslySetInnerHTML={{__html: sanitizedHTML}}>
                 </Typography>
                 </div>
             </div>
