@@ -60,7 +60,9 @@ function UserManagement() {
     const res = await apiUsers.changeStatus({ id, status:changeStatus });
     if(res?.data?.message)
     {  
-      toast.success(res?.data?.message)
+      setTimeout(()=>{
+        toast.success(res?.data?.message)
+      },2000)
     }else{
       toast.error(res?.data?.message)
     }

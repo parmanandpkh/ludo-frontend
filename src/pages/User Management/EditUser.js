@@ -14,13 +14,11 @@ import apiUsers from "src/api/usersService";
 import { complexEmailRegex } from "src/utils/emailCheck";
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX).min(2, 'Write atleast 2 character').max(30, 'FirstName character not more 30'),
-  lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Write atleast 2 character').max(30, 'LastName character not more 30'),
+  firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(30, 'FirstName character not more 30'),
+  lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(30, 'LastName character not more 30'),
   phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
-  email: Yup.string()
-    .required('Email is required')
-    .matches(NOSPACE_REGEX_EMAIL, MESSAGE.NO_SPACE)
-    .test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
+  email: Yup.string().email('Invalid email address').
+    required('Email is required').test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
     .max(255),
 });
 
