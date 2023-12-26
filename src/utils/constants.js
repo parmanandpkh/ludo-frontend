@@ -12,7 +12,7 @@ export const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|
 
 export const NOSPACE_REGEX = /^(?!\s+$).*/;
 
-export const NOSPACE_REGEX_EMAIL = /^(?=.{1,80}$)([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,})+$/
+export const NOSPACE_REGEX_EMAIL =  /^(?=.{1,80}$)([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,})+$/
 
 export const NOSPACE = "Spaces are not allowed";
 
