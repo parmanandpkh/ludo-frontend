@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { toast } from "react-toastify";
 import { MESSAGE } from '../../utils/validationMessage';
 import apiAuth from '../../api/authService';
-import { MOBILE_REGEX, NOSPACE_REGEX, NOSPACE_REGEX_EMAIL, PASSWORDS_REGEX } from '../../utils/constants';
+import { EMAIL_REGEX, MOBILE_REGEX, NOSPACE_REGEX, NOSPACE_REGEX_EMAIL, PASSWORDS_REGEX } from '../../utils/constants';
 import errorHandler from '../../utils/errorHandler';
 import SimpleLayout from 'src/layouts/simple/SimpleLayout';
 import apiUsers from 'src/api/usersService';
@@ -18,9 +18,11 @@ const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(50, 'First name must not be more than 50 characters '),
     lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(50, 'Last name must not be more than 50 characters '),
     phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
-   email: Yup.string().email('Invalid email address').
-    required('Email is required').test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
-    .max(255),
+   email: Yup.string().
+   required("Email  is srequired")
+   .matches(NOSPACE_REGEX, "Space not applied")
+   .test("is-email","Invalid Email", (val) => complexEmailRegex(val))
+   .max(255),
    
     
 });
@@ -66,10 +68,10 @@ export default function AddUser() {
                     <TextField name="email" label="Email" {...getFieldProps('email')} error={Boolean(touched.email && errors.email)} helperText={touched.email && errors.email} />
                 </Stack>
 
-                <Button  size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
+                <Button  size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }} >
                     Save
                 </Button>
-                <Button size="large" type="button" variant="contained" onClick={()=>{navigate('/dashboard/user-management')}} sx={{ my: 2 ,ml:4}}>
+                <Button size="large"  variant="contained" onClick={()=>{navigate('/dashboard/user-management')}} sx={{ my: 2 ,ml:4}}>
                 Cancel
               </Button>
               

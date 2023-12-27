@@ -50,7 +50,7 @@ const PrivacyPolicy = () => {
             {detail && (
             <div className="row">
                 <div className="" >
-                <Typography variant="h6" dangerouslySetInnerHTML={{__html: sanitizedHTML}}>
+                <Typography variant="h6"  style={{ fontWeight: 100}}  dangerouslySetInnerHTML={{__html: sanitizedHTML}}>
                 </Typography>
                 </div>
             </div>

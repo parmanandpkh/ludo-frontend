@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage, useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
@@ -11,13 +11,14 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { uploadAdapterPlugin } from "./Uploadadapter";
 import cmsService from "src/api/cmsService";
 import { Button } from "@mui/material";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import './CKEditorStyle.css' 
+import JoditEditor from "jodit-react";
 // import { uploadAdapterPlugin } from '../Template/Uploadadapter';
 // import {tostE, tostS} from "../Toast"
 function EditPrivacyPolicy() {
   const navigate = useNavigate();
-
+const editor = useRef()
   const [detail, setDetail] = useState("");
   const privacypolicyData = async () => {
     const value = { contentType: "privacy-policy" };
@@ -82,7 +83,7 @@ console.log(initialValues)
                 console.log(data);
                 return (
                   <>
-                    <CKEditor
+                    {/* <CKEditor
                       editor={ClassicEditor}
                       data={data.form.values.privacyText}
                       className="sarampeema"
@@ -119,7 +120,18 @@ console.log(initialValues)
                             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
                         }
                       }}
-/>
+/> */}
+<JoditEditor
+			ref={editor}
+			value={data.form.values.privacyText}
+			
+			tabIndex={1} // tabIndex of textarea
+			
+      onChange={(newContent) => {
+        console.log(newContent)
+         formik.setFieldValue("privacyText", newContent);
+         }}
+		/>
                   </>
                 );
               }}

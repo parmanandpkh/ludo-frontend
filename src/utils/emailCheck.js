@@ -23,4 +23,4 @@ export const complexEmailRegex = (val) => {
         return true;
     }
     return false;
-};
+}

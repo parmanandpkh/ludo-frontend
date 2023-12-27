@@ -54,11 +54,13 @@ function NavItem({ item }) {
       component={RouterLink}
       to={path}
       sx={{
-        '&.active': {
-          color:'#5251a8',
-           bgcolor: title == 'CMS Management'?'':'action.selected',
-          fontWeight:  'fontWeightBold',
-        },
+        ...(open ? {
+          '&.active': {
+            color: '#5251a8',
+            bgcolor: 'action.selected',
+            fontWeight: 'fontWeightBold',
+          },
+        } : {}),
       }}
       >
         <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
