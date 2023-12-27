@@ -10,14 +10,23 @@ import { useNavigate } from "react-router-dom";
 import errorHandler from '../../utils/errorHandler';
 import Moment from 'react-moment';
 import { toast } from "react-toastify";
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 function UserManagement() {
   const [data, setData] = useState();
   const navigate = useNavigate()
-  const[check,setCheck] = useState()
+  const[check,setCheck] = useState(false)
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const[modalShow,setModalShow] = useState(false)
+  const[modalShow,setModalShow] = useState(false);
+  const[currentStatus , setCurrentStatus] = useState('')
+  const[statusId,setStatusId] = useState('')
   const[viewId,setViewId] = useState('')
   const[editId,setEditId] = useState('')
   const[searchItem,setSearchItem] = useState('');
@@ -45,38 +54,44 @@ function UserManagement() {
   };
   console.log(filteredData);
   console.log(data)
-  useEffect(() => {
-    userData();
-  }, [searchItem ,currentPage, pageSize]);
+ 
 
   console.log(pageSize,currentPage)
   const handlePageChange = (page) => {
     console.log(page)
     setCurrentPage(page);
   };
-  const toggleChecked = async (id, status) => {
-    const changeStatus = status == 1?0 :1
-    setCheck()
-    const res = await apiUsers.changeStatus({ id, status:changeStatus });
+  
+  const toggleChecked = async (id, statusChange) => {
+    // setCheck()
+    setShow(false)
+    const res = await apiUsers.changeStatus({ id, status:statusChange == 1? 0:1 });
+    setCurrentStatus('')
+   setCheck(!check)
     if(res?.data?.message)
     {  
-      setTimeout(()=>{
         toast.success(res?.data?.message)
-      },2000)
+      
     }else{
       toast.error(res?.data?.message)
     }
-    setCheck(changeStatus)
+   
     console.log(res);
-    userData()
+    
   };
 console.log(editId)
-
+useEffect(() => {
+  userData()
+},[searchItem ,currentPage, pageSize,check]);
 function capitalizeFirstLetter(string){
 	const firstChar = string.charAt(0).toUpperCase();
 	const remainingChars = string.slice(1).toLowerCase();
 	return `${firstChar}${remainingChars}`;
 }
+const [show, setShow] = useState(false);
+
+
+const handleClose = () => setShow(false);
   const columns = [
     {
       name: "Name",
@@ -96,18 +111,19 @@ function capitalizeFirstLetter(string){
     },
     {
       name: "Status",
-      selector: (row) => row.status,
-      
       cell: (row) => (
         <>
           <FormGroup>
             <FormControlLabel
               control={
                 <Switch
-                  checked={row.status == 1}
-                  onChange={() => {
-                    toggleChecked(row._id, row.status);
+                  checked={row.status}
+                  onClick={() => {                   
+                    setShow(true)
+                    setCurrentStatus(row.status)
+                    setStatusId(row._id)
                   }}
+
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }
@@ -138,9 +154,9 @@ function capitalizeFirstLetter(string){
       ),
     },
   ];
-
+ 
   return (
-    <Card>
+   <Card>
       <CardHeader titleTypographyProps={{variant:'h4' }} title="User Management" >
         
         </CardHeader>
@@ -165,9 +181,27 @@ function capitalizeFirstLetter(string){
             setCurrentPage(currentPage);
           }}
           />
+          
       </CardContent>
+     
+     
       {modalShow?<ViewUserDetail show={modalShow} onHide={() => setModalShow(false)} id={viewId} />:''}
+      <Dialog
+            open={show}            
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle as='h2'>Are you sure want to change the status?</DialogTitle>
+          
+            <DialogActions>
+              <Button variant="outlined" onClick={()=>toggleChecked(statusId,currentStatus)} >Yes</Button>
+              <Button variant="outlined" onClick={handleClose}>No</Button>
+            </DialogActions>
+          </Dialog>
     </Card>
+  
+   
   );
 }
 

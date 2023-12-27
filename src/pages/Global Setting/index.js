@@ -94,7 +94,7 @@ function GlobalSetting() {
                 />
               
              
-                <TextField name="fbLink" label="FaceBook Link *" {...getFieldProps("fbLink")} error={Boolean(touched.fbLink && errors.fbLink)} helperText={touched.fbLink && errors.fbLink} />
+                <TextField name="fbLink" label="Facebook Link *" {...getFieldProps("fbLink")} error={Boolean(touched.fbLink && errors.fbLink)} helperText={touched.fbLink && errors.fbLink} />
                 <TextField
                   name="contactUsEmail"
                   label="Contact Us Email *"

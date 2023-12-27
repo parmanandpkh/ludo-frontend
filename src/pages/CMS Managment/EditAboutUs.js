@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 import { Formik, Form, Field, ErrorMessage, useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
@@ -7,17 +7,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { useHistory, useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { uploadAdapterPlugin } from "./Uploadadapter";
 import cmsService from "src/api/cmsService";
 import { Button } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import './CKEditorStyle.css' 
+import JoditEditor from "jodit-react";
+
 // import { uploadAdapterPlugin } from '../Template/Uploadadapter';
 // import {tostE, tostS} from "../Toast"
 function EditAboutUs() {
   const navigate = useNavigate();
-
+  const editor = useRef(null);
   const [detail, setDetail] = useState("");
   const aboutusData = async () => {
     const value = { contentType: "about-us" };
@@ -67,7 +69,7 @@ function EditAboutUs() {
 });
   
     const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
-   
+  
   return (
     <Card className="p-0">
       <Card.Header>
@@ -89,45 +91,18 @@ function EditAboutUs() {
                 console.log(data);
                 return (
                   <>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={data.form.values.aboutUsText}
-                      className="sarampeema"
-                      onReady={(editor) => {
-                        console.log("abc______", editor)
-                       editor.editing.view.change((writer) => {
-                        writer.setStyle(
-                           "height",
-                           "250px",
-                       editor.editing.view.document.getRoot()
-                      );
-                       })
-                      }}
-                      onChange={(event,editor) => {
-                        const data = editor?.getData()
-                        formik.setFieldValue("aboutUsText", data);
-                         }}
-                       config={{                          
-                        blockToolbar: {
-                          items: [ 'paragraph', 'heading1', 'heading2', '|', 'bulletedList', 'numberedList' ],
-                          shouldNotGroupWhenFull: true
-                        },
-                        ckfinder: {
-                          // Upload the images to the server using the CKFinder QuickUpload command.
-                          uploadUrl:
-                              // 'https://localhost:44374/api/v1/announcements/upload-file?command=QuickUpload&type=Images&responseType=json'
-                              'https://ckeditor.com/apps/ckfinder/3.4.5/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
-                        },
-                        mediaEmbed: {
-                            previewsInData: true
-                        },
+                    <JoditEditor
+			ref={editor}
+			value={data.form.values.aboutUsText}
+			
+			tabIndex={1} // tabIndex of textarea
+			
+      onChange={(newContent) => {
+        console.log(newContent)
+         formik.setFieldValue("aboutUsText", newContent);
+         }}
+		/>
                     
-                        table: {
-                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
-                        }
-                      }}
-
-                    />
                   </>
                   
                 );
