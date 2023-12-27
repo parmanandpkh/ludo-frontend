@@ -18,8 +18,9 @@ import ScrollToTop from './components/scroll-to-top';
 export default function App() {
   return (
     <HelmetProvider>
+      <ToastContainer position="top-right" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover limit={6} />
       <BrowserRouter>
-        <ToastContainer position="top-right" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover limit={6} />
+        
         <ThemeProvider>
           <ScrollToTop />
           <StyledChart />

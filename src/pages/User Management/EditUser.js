@@ -19,7 +19,9 @@ const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
   email: Yup.string().email('Invalid email address').
     required('Email is required').test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
-    .max(255),
+    .max(255).matches(
+      /^(([^<>()[\]\\.,;:\!£~$%^&*<,>?/%s@+-_`= |\{}'"]+(\.[^<>()[\]\\.,;:\!£~$%^&*<,>?/%s@+-_`= |{}'\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    ,'Invalid email address'),
 });
 
 export default function EditUser() {
