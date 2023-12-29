@@ -5,10 +5,6 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory, useLocation, useNavigate } from "react-router-dom";
-import { Avatar } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { uploadAdapterPlugin } from "./Uploadadapter";
 import cmsService from "src/api/cmsService";
 import { Button } from "@mui/material";
 
@@ -55,7 +51,7 @@ console.log(initialValues)
       if(response.data.status){
         toast.success(response.data.message)
         privacypolicyData(); 
-        navigate('/dashboard/privacy-policy')
+        navigate('/cms-management/privacy-policy')
        }else{
         toast.error(response.data.message)
        }
@@ -142,7 +138,7 @@ console.log(initialValues)
             <Button  size="large" type="submit" variant="contained"  sx={{ my: 2,float:'right',ml:3 }}  >
                    Update
                 </Button>
-                <Button  size="large" type="button" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/dashboard/privacy-policy')} }>
+                <Button  size="large" type="button" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/cms-management/privacy-policy')} }>
                    Back
                 </Button>
           </Form>)}

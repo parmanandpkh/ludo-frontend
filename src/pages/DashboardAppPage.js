@@ -16,19 +16,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Number of Users Registered" total={20} icon={'ant-design:dollar-filled'} />
+            <AppWidgetSummary title="Total Number of Users Registered" total={20} icon={'ep:user-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Active User" total={13} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Active User" total={13} color="info" icon={'ep:user-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Inactive User" total={7} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Inactive User" total={7} color="warning" icon={'ep:user-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Payment Reports" total="$34" color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Payment Reports" total="$34" color="error" icon={'ic:outline-payment'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

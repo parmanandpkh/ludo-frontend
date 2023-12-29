@@ -1,7 +1,7 @@
 import AxiosInterceptor from "../utils/AxiosInterceptor";
 
 const cmsService = {
-    contenttype :(values) =>AxiosInterceptor().post(`cms/getOneCms`,  values),
+    getCMS :(params) =>AxiosInterceptor().get(`cms/getAllCms`,  {params}),
    updatecms:(values) =>AxiosInterceptor().post(`cms/updateCms`,  values)
 };
 

@@ -40,7 +40,7 @@ const PrivacyPolicy = () => {
     <CardContent>
         <Card className="overflow-hidden text-wrap col-6">
             <Card.Header>
-            <Button  size="large" type="submit" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/dashboard/edit-privacy-policy',{state:detail})} }>
+            <Button  size="large" type="submit" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/cms-management/edit-privacy-policy',{state:detail})} }>
                    Edit
                 </Button>
             <Card.Title as="h2">Privacy Policy </Card.Title>

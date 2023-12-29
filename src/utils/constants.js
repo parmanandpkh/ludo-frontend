@@ -1,4 +1,4 @@
-export const API_BASE = 'https://ludo.devtechnosys.tech/admin/';
+export const API_BASE = 'https://instacouponapi.devtechnosys.tech/admin/';
 // export const API_BASE = "http://172.16.11.201:17164/api/"
 
 // export const BASE_API = API_BASE + "/api";
@@ -8,7 +8,7 @@ export const MOBILE_REGEX = /^[0-9]{10}$/;
 
 export const PASSWORDS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%^&*?])[A-Za-z\d#$@!%^&*?]{8,}$/;
 
-export const EMAIL_REGEX = /^[^<>()[\]\\,;:\%#^\s@\$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/
+export const EMAIL_REGEX = /^[^<>()[\]\\,;:~`£{}'"\%#^\s@\$&!@]+(?!-)[a-zA-Z0-9]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const NOSPACE_REGEX =  /^(?!\s+$).*/;
 
