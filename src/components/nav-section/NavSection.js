@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
 import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText, } from '@mui/material';
 //
@@ -43,6 +43,8 @@ const useStyles = makeStyles(theme => ({
 }));
 function NavItem({ item }) {
   const { title, path, icon, info,children } = item;
+  const location = useLocation()
+  console.log(location)
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const handleClick = () => {
@@ -54,53 +56,23 @@ function NavItem({ item }) {
       component={RouterLink}
       to={path}
       sx={{
-        ...(open ? {
           '&.active': {
+            marginTop:'5px',
+            marginBottom:'5px',
             color: '#5251a8',
             bgcolor: 'action.selected',
             fontWeight: 'fontWeightBold',
           },
-        } : {}),
+       
       }}
       >
         <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
-        <ListItem button onClick={handleClick}>
+        <ListItem >
         <ListItemText disableTypography primary={title}  />
-        {title == 'CMS Management'? open ? <ExpandLess /> : <ExpandMore />:''}
         </ListItem>
       {info && info}
     </StyledNavItem>
-      <Collapse in={open} timeout="auto" unmountOnExit orientation='vertical'>
-        {title == 'CMS Management'? children.map((item)=>{
-          {console.log(item)}
-          return(
-            <>
-             <StyledNavItem
-              component={RouterLink}
-              to={item.path}
-              sx={{
-                marginLeft:"20px",
-                '&.active': {
-                  color: '#5251a8',
-                  bgcolor: 'action.selected',
-                  fontWeight: 'fontWeightBold',
-                },
-              }}
-              >
-              <StyledNavItemIcon>{item.icon && item.icon}</StyledNavItemIcon>
-                        <ListItemText disableTypography primary={item.title} />
-              </StyledNavItem>
-           
-            </>
-          
-       
-          )
-         
-         
-        }
-        ):''}
      
-      </Collapse>
     </>
   );
 }

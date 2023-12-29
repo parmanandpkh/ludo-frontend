@@ -14,12 +14,15 @@ import UserManagement from './pages/User Management';
 import ChangePassword from './pages/auth/ChangePassword';
 
 import ResetPassword from './pages/auth/ResetPasswordPage';
-import AboutUs from './pages/CMS Managment/AboutUs';
+import AboutUs from './pages/CMS Managment/ViewCms';
 import PrivacyPolicy from './pages/CMS Managment/PrivacyPolicy';
-import EditAboutUs from './pages/CMS Managment/EditAboutUs';
+import EditAboutUs from './pages/CMS Managment/EditCMS';
 import EditPrivacyPolicy from './pages/CMS Managment/EditPrivacyPolicy';
 import AddUser from './pages/User Management/AddUser';
 import EditUser from './pages/User Management/EditUser';
+import AddCMS from './pages/CMS Managment/AddCMS';
+import EditCms from './pages/CMS Managment/EditCMS';
+import ViewCms from './pages/CMS Managment/ViewCms';
 
 
 
@@ -35,25 +38,31 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        {path:'cms-management', element:<CMSManagment/>},
-        {path:'about-us', element:<AboutUs/>},
-        {path:'edit-about-us', element:<EditAboutUs/>},
-        {path:'privacy-policy', element:<PrivacyPolicy/>},
-        {path:'edit-privacy-policy', element:<EditPrivacyPolicy/>},
-        {path:'global-setting', element:<GlobalSetting/>},
-        {path:'user-management', element:<UserManagement/>},
-        {path:'change-password', element:<ChangePassword/>},
-        {path:'add-user',element:<AddUser/>},
-        {path:'edit-user',element:<EditUser/>}
-        // {
-        //   path: 'price', children: [
-        //     { index: true, element: <SubscriptionPage /> },
-        //     { path: 'add', element: <SubscriptionAddPage /> },
-        //     { path: 'edit/:id', element: <SubscriptionEditPage /> },
-        //   ]
-        // },
+       ,
       ],
     },
+    {path:'cms-management',
+     element:<DashboardLayout />,
+     errorElement: <Page404 />,
+    children : [
+      {path:'', element:<CMSManagment/>},
+      {path:'add-cms',element:<AddCMS/>},
+      {path:'view-cms', element:<ViewCms/>},
+      {path:'edit-cms', element:<EditCms/>},
+      {path:'privacy-policy', element:<PrivacyPolicy/>},
+      {path:'edit-privacy-policy', element:<EditPrivacyPolicy/>}
+    ]},
+    {path:'user-management',
+    element:<DashboardLayout />,
+    errorElement: <Page404 />,
+    children:[
+      {path:'',element:<UserManagement/>},
+      {path:'add-user',element:<AddUser/>},
+      {path:'edit-user',element:<EditUser/>}
+    ]
+  },
+  {path:'global-setting', element:<GlobalSetting/>},
+  {path:'change-password', element:<ChangePassword/>},
     { path: '*', element: <Navigate to="/dashboard" /> },
   ];
 
@@ -64,7 +73,7 @@ export default function Router() {
         { path: '404', element: <Page404 /> },
         { path: 'login', element: <LoginPage /> },
         { path: '/forgot', element: <ForgetForm /> },
-       
+
         { path: '/reset-password/:otp', element: <ResetPassword /> },
         
       ],

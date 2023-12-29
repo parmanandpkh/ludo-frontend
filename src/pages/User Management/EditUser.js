@@ -17,11 +17,11 @@ const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('FirstName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(30, 'FirstName character not more 30'),
   lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(30, 'LastName character not more 30'),
   phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
-  email: Yup.string().email('Invalid email address').
-    required('Email is required').test("is-email", MESSAGE.EMAIL, (val) => complexEmailRegex(val))
-    .max(255).matches(
-      /^(([^<>()[\]\\.,;:\!£~$%^&*<,>?/%s@+-_`= |\{}'"]+(\.[^<>()[\]\\.,;:\!£~$%^&*<,>?/%s@+-_`= |{}'\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ,'Invalid email address'),
+  email: Yup.string().
+  required("Email  is required")
+  .matches(NOSPACE_REGEX, "Space not applied")
+  .test("is-email","Invalid email address", (val) => complexEmailRegex(val))
+  .max(255),
 });
 
 export default function EditUser() {
@@ -49,7 +49,7 @@ export default function EditUser() {
       apiUsers
         .editUser({ id:state.id,firstName: values.firstName, lastName: values.lastName, phoneNumber: values?.phoneNumber, email: values?.email })
         .then((res) => {
-          navigate("/dashboard/user-management");
+          navigate("/user-management");
           toast.success(res?.data?.message);
           
         })
@@ -93,7 +93,7 @@ export default function EditUser() {
               <Button size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
                 Update
               </Button>
-              <Button size="large" type="button" variant="contained" onClick={()=>{navigate('/dashboard/user-management')}} sx={{ my: 2 ,ml:4}}>
+              <Button size="large" type="button" variant="contained" onClick={()=>{navigate('/user-management')}} sx={{ my: 2 ,ml:4}}>
                 Cancel
               </Button>
             </Form>

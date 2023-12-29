@@ -41,7 +41,7 @@ export default function AccountPopover() {
     navigate('/login', { replace: true });
   }
   const handleSetting = ()=>{
-    navigate('/dashboard/global-setting')
+    navigate('/global-setting')
   }
 
   return (
@@ -107,7 +107,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
         <MenuItem onClick={() => {
           handleClose()
-          navigate('/dashboard/change-password')
+          navigate('/change-password')
         }} >
           <LockResetIcon sx={{mr:2}}/>{" "}Change Password
         </MenuItem>

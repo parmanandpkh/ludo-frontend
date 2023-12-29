@@ -61,7 +61,9 @@ function GlobalSetting() {
           .updateSetting(values)
           .then((res) => {
             console.log(res)
-            toast.success(res.data.message)
+            toast.success(res.data.message,{
+              toastId: 'success1',
+          })
             settingData()
           })
           .catch((err) => {
