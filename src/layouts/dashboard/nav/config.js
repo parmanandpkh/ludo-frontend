@@ -13,25 +13,14 @@ const navConfig = [
   },
   {
     title: 'CMS Management',
-     
+    path: '/cms-management',
     icon: icon('cms'),
-    children : [
-      {
-        title: 'About Us',
-    path: '/dashboard/about-us',
-    icon: icon('aboutus'),
-      },{
-        title: 'Privacy Policy',
-    path: '/dashboard/privacy-policy',
-    icon: icon('privacypolicy'),
-      }
-     
-    ]
+   
   },
   
   {
     title: 'User Management',
-    path: '/dashboard/user-management',
+    path: '/user-management',
     icon: icon('user_management'),
   },
   

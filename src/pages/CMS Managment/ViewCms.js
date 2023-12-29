@@ -2,37 +2,17 @@ import { Grid, CardContent, Button, TextField,Typography,Card as MCard } from "@
 import { Form, FormikProvider, useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import cmsService from "src/api/cmsService";
 import * as yup from "yup";
 
-const validationSchema = yup.object({ aboutUsText: yup.string().required() });
+const validationSchema = yup.object({ ViewCmsText: yup.string().required() });
 
-const AboutUs = () => {
+const ViewCms = () => {
+
     const navigate = useNavigate()
-    const[detail, setDetail] = useState('')
-    const aboutusData = async () => {
-        const value = {contentType :"about-us"}
-        const response = await cmsService.contenttype(value)
-        setDetail(response.data.data)
-        console.log(response.data.data.aboutUsText)
-        
-      };
-      console.log(detail)
-      useEffect(()=>{
-        aboutusData()
-      },[])
-
-      
-  
-  useEffect(()=>{
-    // resetForm({
-    //     value:{
-    //         ...values,
-    //         aboutUsText:detail.aboutUsText
-    //     }})
-    console.log(detail)
-  },[detail])
+ const { state } = useLocation()
+ console.log(state)
   const addTargetAttribute = (html) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -44,21 +24,20 @@ const AboutUs = () => {
     return doc.body.innerHTML;
   };
 
-  const sanitizedHTML = addTargetAttribute(detail?.aboutUsText);
+  const sanitizedHTML = addTargetAttribute(state?.data?.description);
 
   return (
   <MCard className="overflow-hidden text-wrap col-6">
     <CardContent>
         <Card className="overflow-hidden text-wrap col-6">
             <Card.Header>
-            <Button  size="large" type="submit" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/dashboard/edit-about-us')} }>
-                   Edit
+            <Button  size="large" type="submit" variant="contained"  sx={{ my: 2,float:'right' }} onClick={()=>{navigate('/cms-management')}}>
+                  Back
                 </Button>
-            <Card.Title as="h2">About US </Card.Title>
-            
+            <Card.Title as="h2">{state?.data?.title} </Card.Title>
             </Card.Header>
             <Card.Body>
-            {detail && (
+            {state && (
             <div className="row">
                 <div className="" >
                 <Typography   style={{ fontWeight: 100}} dangerouslySetInnerHTML={{__html: sanitizedHTML}}>
@@ -73,4 +52,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default ViewCms;

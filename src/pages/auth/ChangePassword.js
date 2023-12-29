@@ -53,7 +53,9 @@ export default function ChangePassword() {
             apiUsers
                 .changePassword({ oldPassword:values?.oldPassword , newPassword: values?.newPassword ,confirmPassword:values?.confirmPassword })
                 .then((res) => {
-                    toast.success(res?.data?.message)
+                    toast.success(res?.data?.message,{
+                        toastId: 'success1',
+                    })
                     navigate('/dashboard/app');
                 })
                 .catch((err) => {

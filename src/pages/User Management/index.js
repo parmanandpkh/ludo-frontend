@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import errorHandler from '../../utils/errorHandler';
 import Moment from 'react-moment';
 import { toast } from "react-toastify";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -31,6 +31,8 @@ function UserManagement() {
   const[editId,setEditId] = useState('')
   const[searchItem,setSearchItem] = useState('');
   const[filteredData,setFilteredData] = useState('');
+  const [warning, setWarning] = useState("");
+  const [action, setAction] = useState("");
   const [pagination, setPagination] = useState({
     page: 1,
     perPage: 5, // Initial page size
@@ -63,26 +65,31 @@ function UserManagement() {
   };
   
   const toggleChecked = async (id, statusChange) => {
-    // setCheck()
-    setShow(false)
-    const res = await apiUsers.changeStatus({ id, status:statusChange == 1? 0:1 });
-    setCurrentStatus('')
-   setCheck(!check)
-    if(res?.data?.message)
-    {  
-        toast.success(res?.data?.message)
-      
-    }else{
-      toast.error(res?.data?.message)
-    }
-   
-    console.log(res);
     
+  setShow(false);
+  const res = await apiUsers.changeStatus({ id, status: statusChange == 1 ? 0 : 1 });
+
+  // Handle API response
+  setCurrentStatus('');
+  setCheck(!check);
+
+  if (res?.data?.message) {
+    const updatedData = data.map((row) =>
+    row._id === id ? { ...row, status: !row.status } : row
+  );
+  setData(updatedData);
+
+    toast.success(res?.data?.message);
+  } else {
+    // Revert local state in case of API error
+    setData(data);
+    toast.error(res?.data?.message);
+  } 
   };
 console.log(editId)
 useEffect(() => {
   userData()
-},[searchItem ,currentPage, pageSize,check]);
+},[searchItem ,currentPage, pageSize]);
 function capitalizeFirstLetter(string){
 	const firstChar = string.charAt(0).toUpperCase();
 	const remainingChars = string.slice(1).toLowerCase();
@@ -122,6 +129,8 @@ const handleClose = () => setShow(false);
                     setShow(true)
                     setCurrentStatus(row.status)
                     setStatusId(row._id)
+                    setAction("status");
+                    setWarning("Are you sure want to change the status? ");
                   }}
 
                   inputProps={{ "aria-label": "controlled" }}
@@ -133,12 +142,12 @@ const handleClose = () => setShow(false);
       ),
     },
     {
-      name: "Action",
+      name:<div style={{textAlign:'center',marginLeft:'40px'}}>Action</div>,
       cell: (row) => (
         <>
           <Tooltip title="Edit" placement="top">
             <IconButton color="info" onClick={()=>{setEditId(row._id);
-              navigate('/dashboard/edit-user',{state:{id:row._id}})}}>
+              navigate('/user-management/edit-user',{state:{id:row._id}})}}>
               <EditOutlined  />
             </IconButton>
           </Tooltip>
@@ -150,6 +159,18 @@ const handleClose = () => setShow(false);
               <VisibilityIcon />
             </IconButton>
           </Tooltip>
+          {/* <Tooltip title="Delete" placement="top">
+            <IconButton
+              color="info"
+              onClick={() => {
+                setShow(true);
+                setAction("delete");
+                setWarning("Are you sure want to delete the user?");
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip> */}
         </>
       ),
     },
@@ -163,7 +184,7 @@ const handleClose = () => setShow(false);
       <Box sx={{ display: "flex", alignItems:'center',justifyContent:'flex-end' }}>
               
               <TextField label="Search"  variant="standard" onChange={(e)=>setSearchItem(e.target.value)}  />
-              <Button  size="large" type="submit" variant="contained" sx={{ml:3,mr:3}}   onClick={()=>navigate('/dashboard/add-user')}>
+              <Button  size="large" type="submit" variant="contained" sx={{ml:3,mr:3}}   onClick={()=>navigate('/user-management/add-user')}>
                    Add
                 </Button>
             </Box>
@@ -186,19 +207,26 @@ const handleClose = () => setShow(false);
      
      
       {modalShow?<ViewUserDetail show={modalShow} onHide={() => setModalShow(false)} id={viewId} />:''}
-      <Dialog
-            open={show}            
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
+      <Dialog open={show} keepMounted onClose={handleClose} aria-describedby="alert-dialog-slide-description">
+        <DialogTitle as="h2">{warning}</DialogTitle>
+        <DialogActions>
+          <Button
+            variant="outlined"
+            style={{ backgroundColor: "white" }}
+            onClick={() => {
+              if (action == "status") {
+                toggleChecked(statusId, currentStatus);
+              } else {
+              }
+            }}
           >
-            <DialogTitle as='h2'>Are you sure want to change the status?</DialogTitle>
-          
-            <DialogActions>
-              <Button variant="outlined" onClick={()=>toggleChecked(statusId,currentStatus)} >Yes</Button>
-              <Button variant="outlined" onClick={handleClose}>No</Button>
-            </DialogActions>
-          </Dialog>
+            Yes
+          </Button>
+          <Button variant="outlined" style={{ backgroundColor: "white" }} onClick={handleClose}>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   
    

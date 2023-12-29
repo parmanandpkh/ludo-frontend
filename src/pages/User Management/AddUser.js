@@ -19,11 +19,11 @@ const validationSchema = Yup.object().shape({
     lastName: Yup.string().required('LastName is required').matches(NOSPACE_REGEX).min(2, 'Please enter atleast 2 characters').max(50, 'Last name must not be more than 50 characters '),
     phoneNumber: Yup.string().required('Phone Number is required').matches(MOBILE_REGEX, MESSAGE.PHONE),
    email: Yup.string().
-   required("Email  is srequired")
+   required("Email  is required")
    .matches(NOSPACE_REGEX, "Space not applied")
-   .test("is-email","Invalid Email", (val) => complexEmailRegex(val))
+   .test("is-email","Invalid email address", (val) => complexEmailRegex(val))
    .max(255),
-   
+
     
 });
 
@@ -41,7 +41,7 @@ export default function AddUser() {
                 .addUser({ firstName: values.firstName, lastName:values.lastName, phoneNumber: values?.phoneNumber ,email:values?.email })
                 .then((res) => {
                     toast.success(res?.data?.message)
-                    navigate('/dashboard/user-management');
+                    navigate('/user-management');
                 })
                 .catch((err) => {
                     errorHandler(err)
@@ -71,10 +71,10 @@ export default function AddUser() {
                 <Button  size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }} >
                     Save
                 </Button>
-                <Button size="large"  variant="contained" onClick={()=>{navigate('/dashboard/user-management')}} sx={{ my: 2 ,ml:4}}>
+                <Button size="large"  variant="contained" onClick={()=>{navigate('/user-management')}} sx={{ my: 2 ,ml:4}}>
                 Cancel
               </Button>
-              
+
             </Form>
         </FormikProvider>
         </CardContent>
