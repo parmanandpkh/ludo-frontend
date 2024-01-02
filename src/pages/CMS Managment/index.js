@@ -12,7 +12,7 @@ import Moment from "react-moment";
 import { toast } from "react-toastify";
 import CloseIcon from "@mui/icons-material/Close";
 import cmsService from "src/api/cmsService";
-import AboutUs from "./ViewCms";
+
 
 function CMSManagement() {
   const [data, setData] = useState();
@@ -77,7 +77,7 @@ function CMSManagement() {
         cell: (row) => (
         <div>
           {row.description && (
-            <p>{row.description.replace(/<[^>]*>/g, '').split(' ').slice(0, 4).join(' ')}</p>
+            <p>{row.description.replace(/<[^>]*>/g, '').split(' ').slice(0, 4).join(' ')}....</p>
           )}
         </div>
       ),

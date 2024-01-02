@@ -6,25 +6,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { useHistory, useLocation, useNavigate } from "react-router-dom";
 import cmsService from "src/api/cmsService";
 import { Button, MenuItem, TextField, Card, Stack, CardContent, Typography } from "@mui/material";
-import "./CKEditorStyle.css";
 import JoditEditor from "jodit-react";
 
-// import { uploadAdapterPlugin } from '../Template/Uploadadapter';
-// import {tostE, tostS} from "../Toast"
 function EditCms() {
   const navigate = useNavigate();
   const editor = useRef(null);
   const { state } = useLocation();
-const[value,setValue] = useState(state.data.status?'Active':'Deactive')
+  const [value, setValue] = useState(state.data.status ? "Active" : "Deactive");
   console.log(state.data.status);
 
-const handleChnage = (e) =>{
-  console.log(e.target.value)
+  const handleChnage = (e) => {
+    console.log(e.target.value);
 
-    setValue(e.target.value)
-
-  }
-
+    setValue(e.target.value);
+  };
 
   const validationSchema = Yup.object().shape({
     description: Yup.string()
@@ -35,22 +30,20 @@ const handleChnage = (e) =>{
   });
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: { title: state.data?.title ? state.data?.title : "",
-    description: state.data?.description ? state.data?.description : "",
-  status:value },
+    initialValues: { title: state.data?.title ? state.data?.title : "", description: state.data?.description ? state.data?.description : "", status: value },
     validationSchema,
     onSubmit: async (values) => {
       const body = {
-        _id:state.data?._id,
+        _id: state.data?._id,
         description: values?.description,
         title: values?.title,
-        status:value == 'Active' ? true:false
+        status: value == "Active" ? true : false,
       };
 
       const response = await cmsService.updatecms(body);
-      console.log(response)
+      console.log(response);
       if (response.data.status) {
-        toast.success(response.data.message);
+        toast.success(`${state.data?.title} updated`);
 
         navigate("/cms-management");
       } else {
@@ -95,16 +88,16 @@ const handleChnage = (e) =>{
               </span>
               <TextField
                 fullWidth
-                  value={value}
-                  onChange={handleChnage}
+                value={value}
+                onChange={handleChnage}
                 select // tell TextField to render select
                 label="Status"
               >
                 <MenuItem key={1} value="Active">
-                 Active
+                  Active
                 </MenuItem>
                 <MenuItem key={2} value="Deactive">
-                 Deactive
+                  Deactive
                 </MenuItem>
               </TextField>
             </Stack>
