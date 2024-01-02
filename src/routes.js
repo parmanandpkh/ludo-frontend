@@ -46,11 +46,11 @@ export default function Router() {
      errorElement: <Page404 />,
     children : [
       {path:'', element:<CMSManagment/>},
-      {path:'add-cms',element:<AddCMS/>},
+      // {path:'add-cms',element:<AddCMS/>},
       {path:'view-cms', element:<ViewCms/>},
       {path:'edit-cms', element:<EditCms/>},
-      {path:'privacy-policy', element:<PrivacyPolicy/>},
-      {path:'edit-privacy-policy', element:<EditPrivacyPolicy/>}
+      // {path:'privacy-policy', element:<PrivacyPolicy/>},
+      // {path:'edit-privacy-policy', element:<EditPrivacyPolicy/>}
     ]},
     {path:'user-management',
     element:<DashboardLayout />,
