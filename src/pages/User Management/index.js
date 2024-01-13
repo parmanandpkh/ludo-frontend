@@ -1,36 +1,62 @@
 import { Construction, EditOutlined, Search } from "@mui/icons-material";
-import { Box, Button, Card, CardContent, CardHeader, FormControlLabel, FormGroup, IconButton, Switch, TextField, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  Switch,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import apiUsers from "src/api/usersService";
-import HistoryIcon from '@mui/icons-material/History';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import HistoryIcon from "@mui/icons-material/History";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import ViewUserDetail from "./ViewUser";
 import { useNavigate } from "react-router-dom";
-import errorHandler from '../../utils/errorHandler';
-import Moment from 'react-moment';
+import errorHandler from "../../utils/errorHandler";
+import Moment from "react-moment";
 import { toast } from "react-toastify";
-import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import DeleteIcon from "@mui/icons-material/Delete";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Stack } from "react-bootstrap";
+import styled from "styled-components";
+import { makeStyles } from "@material-ui/core";
+
+const useStyle = makeStyles((theme) => ({
+  h2: {
+    paddingTop: "0px",
+    paddingBottom: "0px",
+    [theme.breakpoints.down("xs")]: {
+      padding: "0px",
+      fontSize: "16px",
+    },
+  },
+}));
 
 function UserManagement() {
   const [data, setData] = useState();
-  const navigate = useNavigate()
-  const[check,setCheck] = useState(false)
+  const navigate = useNavigate();
+  const [check, setCheck] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const[modalShow,setModalShow] = useState(false);
-  const[currentStatus , setCurrentStatus] = useState('')
-  const[statusId,setStatusId] = useState('')
-  const[viewId,setViewId] = useState('')
-  const[editId,setEditId] = useState('')
-  const[searchItem,setSearchItem] = useState('');
-  const[filteredData,setFilteredData] = useState('');
+  const [modalShow, setModalShow] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState("");
+  const [statusId, setStatusId] = useState("");
+  const [viewId, setViewId] = useState("");
+  const [editId, setEditId] = useState("");
+  const [searchItem, setSearchItem] = useState("");
+  const [filteredData, setFilteredData] = useState("");
   const [warning, setWarning] = useState("");
   const [action, setAction] = useState("");
   const [pagination, setPagination] = useState({
@@ -38,67 +64,84 @@ function UserManagement() {
     perPage: 5, // Initial page size
   });
   const userData = async () => {
-    const body ={
-        searchItem: searchItem?searchItem:'',
-        pageNumber: currentPage,
-        pageSize: pageSize,
-        status: ""
-    }
-    await apiUsers.getAllUser(body)
-    .then((res) => {
-      setData(res.data.data.result);
-      setTotalPages(res.data.data.totalRecords);
-    }).catch(err => {
-     setData('')
-     setTotalPages('');
-    })
-    
+    const body = {
+      searchItem: searchItem ? searchItem : "",
+      pageNumber: currentPage,
+      pageSize: pageSize,
+      status: "",
+    };
+    await apiUsers
+      .getAllUser(body)
+      .then((res) => {
+        setData(res.data.data.result);
+        setTotalPages(res.data.data.totalRecords);
+      })
+      .catch((err) => {
+        setData("");
+        setTotalPages("");
+      });
   };
-  console.log(filteredData);
-  console.log(data)
- 
+  const customStyles = {
+    headCells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "bold",
+      },
+    },
+    cells: {
+      style: {
+        padding: "16px",
+      },
+    },
+  };
 
-  console.log(pageSize,currentPage)
   const handlePageChange = (page) => {
-    console.log(page)
+    console.log(page);
     setCurrentPage(page);
   };
-  
+
   const toggleChecked = async (id, statusChange) => {
-    
-  setShow(false);
-  const res = await apiUsers.changeStatus({ id, status: statusChange == 1 ? 0 : 1 });
+    setShow(false);
+    const res = await apiUsers.changeStatus({
+      id,
+      status: statusChange == 1 ? 0 : 1,
+    });
 
-  // Handle API response
-  setCurrentStatus('');
-  setCheck(!check);
+    // Handle API response
+    setCurrentStatus("");
+    setCheck(!check);
 
-  if (res?.data?.message) {
-    const updatedData = data.map((row) =>
-    row._id === id ? { ...row, status: !row.status } : row
-  );
-  setData(updatedData);
+    if (res?.data?.message) {
+      const updatedData = data.map((row) =>
+        row._id === id ? { ...row, status: !row.status } : row
+      );
+      setData(updatedData);
 
-    toast.success(res?.data?.message);
-  } else {
-    // Revert local state in case of API error
-    setData(data);
-    toast.error(res?.data?.message);
-  } 
+      toast.success(res?.data?.message);
+    } else {
+      // Revert local state in case of API error
+      setData(data);
+      toast.error(res?.data?.message);
+    }
   };
-console.log(editId)
-useEffect(() => {
-  userData()
-},[searchItem ,currentPage, pageSize]);
-function capitalizeFirstLetter(string){
-	const firstChar = string.charAt(0).toUpperCase();
-	const remainingChars = string.slice(1).toLowerCase();
-	return `${firstChar}${remainingChars}`;
-}
-const [show, setShow] = useState(false);
+  console.log(editId);
+  useEffect(() => {
+    userData();
+  }, [searchItem, currentPage, pageSize]);
 
+  function capitalizeFirstLetter(string) {
+    if (string != "undefined " && string) {
+      const firstChar = string.charAt(0).toUpperCase();
+      const remainingChars = string.slice(1).toLowerCase();
+      return `${firstChar}${remainingChars}`;
+    } else {
+      return "";
+    }
+  }
 
-const handleClose = () => setShow(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
   const columns = [
     {
       name: "Name",
@@ -114,7 +157,9 @@ const handleClose = () => setShow(false);
     },
     {
       name: "Created Date & Time",
-      selector: (row) =>   <Moment format="DD/MM/YYYY  HH:MM A" >{row.createdAt}</Moment>,
+      selector: (row) => (
+        <Moment format="DD/MM/YYYY  HH:MM A">{row.createdAt}</Moment>
+      ),
     },
     {
       name: "Status",
@@ -125,14 +170,13 @@ const handleClose = () => setShow(false);
               control={
                 <Switch
                   checked={row.status}
-                  onClick={() => {                   
-                    setShow(true)
-                    setCurrentStatus(row.status)
-                    setStatusId(row._id)
+                  onClick={() => {
+                    setShow(true);
+                    setCurrentStatus(row.status);
+                    setStatusId(row._id);
                     setAction("status");
                     setWarning("Are you sure want to change the status? ");
                   }}
-
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }
@@ -142,20 +186,33 @@ const handleClose = () => setShow(false);
       ),
     },
     {
-      name:<div style={{textAlign:'center',marginLeft:'40px'}}>Action</div>,
+      name: (
+        <div style={{ textAlign: "center", marginLeft: "40px" }}>Action</div>
+      ),
       cell: (row) => (
         <>
           <Tooltip title="Edit" placement="top">
-            <IconButton color="info" onClick={()=>{setEditId(row._id);
-              navigate('/user-management/edit-user',{state:{id:row._id}})}}>
-              <EditOutlined  />
+            <IconButton
+              color="primary"
+              onClick={() => {
+                setEditId(row._id);
+                navigate("/user-management/edit-user", {
+                  state: { id: row._id },
+                });
+              }}
+            >
+              <EditOutlined />
             </IconButton>
           </Tooltip>
-        
+
           <Tooltip title="View" placement="top">
-            <IconButton color="info"   onClick={()=>{
+            <IconButton
+              color="primary"
+              onClick={() => {
                 setModalShow(true);
-                setViewId(row._id)}}>
+                setViewId(row._id);
+              }}
+            >
               <VisibilityIcon />
             </IconButton>
           </Tooltip>
@@ -175,61 +232,102 @@ const handleClose = () => setShow(false);
       ),
     },
   ];
- 
+  const classes = useStyle();
   return (
-   <Card>
-      <CardHeader titleTypographyProps={{variant:'h4' }} title="User Management" >
-        
-        </CardHeader>
-      <Box sx={{ display: "flex", alignItems:'center',justifyContent:'flex-end' }}>
-              
-              <TextField label="Search"  variant="standard" onChange={(e)=>setSearchItem(e.target.value)}  />
-              <Button  size="large" type="submit" variant="contained" sx={{ml:3,mr:3}}   onClick={()=>navigate('/user-management/add-user')}>
-                   Add
-                </Button>
-            </Box>
-      
+    <Card>
+      <CardHeader
+        titleTypographyProps={{ variant: "h4" }}
+        title="User Management"
+      ></CardHeader>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="standard"
+          onChange={(e) => setSearchItem(e.target.value)}
+        />
+        <Button
+          size="large"
+          type="submit"
+          variant="contained"
+          sx={{ ml: 3, mr: 3 }}
+          onClick={() => navigate("/user-management/add-user")}
+        >
+          Add
+        </Button>
+      </Box>
+
       <CardContent>
-        <DataTable columns={columns} data={filteredData?filteredData:data}  pagination   
-        paginationServer
-           paginationTotalRows={totalPages}
+        <DataTable
+          customStyles={customStyles}
+          columns={columns}
+          data={filteredData ? filteredData : data}
+          pagination
+          paginationServer
+          style={{ padding: "16px" }}
+          paginationTotalRows={totalPages}
           onChangePage={handlePageChange}
           paginationPerPage={pageSize}
-          // paginationTotalRows={data ? data.length : 0} 
+          // paginationTotalRows={data ? data.length : 0}
           paginationRowsPerPageOptions={[5, 10, 20, 50]}
           onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
             setPageSize(currentRowsPerPage);
             setCurrentPage(currentPage);
           }}
-          />
-          
+        />
       </CardContent>
-     
-     
-      {modalShow?<ViewUserDetail show={modalShow} onHide={() => setModalShow(false)} id={viewId} />:''}
-      <Dialog open={show} keepMounted onClose={handleClose} aria-describedby="alert-dialog-slide-description">
-        <DialogTitle as="h2">{warning}</DialogTitle>
-        <DialogActions>
-          <Button
-            variant="outlined"
-            style={{ backgroundColor: "white" }}
-            onClick={() => {
-              if (action == "status") {
-                toggleChecked(statusId, currentStatus);
-              } else {
-              }
-            }}
-          >
-            Yes
-          </Button>
-          <Button variant="outlined" style={{ backgroundColor: "white" }} onClick={handleClose}>
-            No
-          </Button>
-        </DialogActions>
+
+      {modalShow ? (
+        <ViewUserDetail
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          id={viewId}
+        />
+      ) : (
+        ""
+      )}
+      <Dialog
+        open={show}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <div className="confirm_modal">
+          <DialogTitle as="h2" className={classes.h2}>
+            {warning}
+          </DialogTitle>
+
+          <DialogActions style={{ justifyContent: "center", gap: "2px" }}>
+            <Button
+              variant="contained"
+              size="medium"
+              className={"hoverWhite"}
+              onClick={() => {
+                if (action == "status") {
+                  toggleChecked(statusId, currentStatus);
+                } else {
+                }
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              size="medium"
+              variant="outlined"
+              onClick={handleClose}
+              className={"hoverWhite"}
+            >
+              No
+            </Button>
+          </DialogActions>
+        </div>
       </Dialog>
     </Card>
-  
-   
   );
 }
 

@@ -14,6 +14,7 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
+import palette from 'src/theme/palette';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ const StyledAccount = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: alpha(theme.palette.grey[500], 0.12),
+  backgroundColor: alpha(theme.palette.grey[500], 0.62),
 }));
 
 // ----------------------------------------------------------------------
@@ -53,21 +54,21 @@ export default function Nav({ openNav, onCloseNav }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+      <Box sx={{ px: 2.5, py: 3,  }}>
         <Logo />
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
+      <Box sx={{ mb: 5, mx: 2.5,color : palette.action.navSelected  }}>
         <Link underline="none">
           <StyledAccount>
             <Avatar src={account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: '#5251a8' }}>
+              <Typography variant="subtitle2" sx={{ color: '#fff' }}>
                 {account.displayName}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ color: 'text.white' }}>
                 {account.role}
               </Typography>
             </Box>
@@ -98,8 +99,9 @@ export default function Nav({ openNav, onCloseNav }) {
           PaperProps={{
             sx: {
               width: NAV_WIDTH,
-              bgcolor: 'background.default',
+              bgcolor: palette.primary.darkest,
               borderRightStyle: 'dashed',
+             
             },
           }}
         >
@@ -109,11 +111,13 @@ export default function Nav({ openNav, onCloseNav }) {
         <Drawer
           open={openNav}
           onClose={onCloseNav}
+          bgcolor
           ModalProps={{
             keepMounted: true,
           }}
           PaperProps={{
-            sx: { width: NAV_WIDTH },
+            sx: { width: NAV_WIDTH ,
+              bgcolor: palette.primary.darkest},
           }}
         >
           {renderContent}

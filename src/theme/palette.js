@@ -14,7 +14,11 @@ const GREY = {
   700: '#454F5B',
   800: '#212B36',
   900: '#161C24',
+  1000:"#fff",
+  1100:"#5251a8"
 };
+
+
 
 // const PRIMARY = {
 //   lighter: '#D1E9FC',
@@ -31,6 +35,7 @@ const PRIMARY = {
   main: '#5251a8',
   dark: '#3ac13e',
   darker: '#35b039',
+  darkest:"#0c0c1a",
   contrastText: '#fff',
 };
 
@@ -95,11 +100,13 @@ const palette = {
     primary: GREY[800],
     secondary: GREY[600],
     disabled: GREY[500],
+    white : GREY[1000]
   },
   background: {
     paper: '#fff',
     default: GREY[100],
     neutral: GREY[200],
+    navSelected : alpha(GREY[1100])
   },
   action: {
     active: GREY[600],
@@ -110,7 +117,10 @@ const palette = {
     focus: alpha(GREY[500], 0.24),
     hoverOpacity: 0.08,
     disabledOpacity: 0.48,
+    navSelected: GREY[1100],
   },
+
+
 };
 
 export default palette;

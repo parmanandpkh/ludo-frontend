@@ -1,8 +1,14 @@
-export default CardLayout = ({title,children})=>{
+import { CardHeader, Container, Card ,CardContent} from '@mui/material';
+import BackButton from "../components/Buttons/BackButton";
+import { makeStyles } from '@material-ui/core';
+
+export default function CardLayout ({title,children , noBackButton}){
+
+
     return(
         <Container>
             <Card>
-               <CardHeader title={<BackButton text={title} variant="h6" />} />
+               {!noBackButton ? <CardHeader title={<BackButton text={title} variant="h6" />}  /> : ""}
                 <CardContent>
                     {children}
                 </CardContent>
