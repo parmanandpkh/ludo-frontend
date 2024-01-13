@@ -13,9 +13,12 @@ const Logo = ({ disabledLink = false, sx }) => {
 
   return (
     <Box sx={{ display: 'flex', width: "100%", justifyContent: "center" }} >
+      <span  style={{    background: "white",padding: "10px", borderRadius: "15px"}}>
+
       <Link to="/" component={RouterLink}>
         {logo}
       </Link>
+      </span>
     </Box>
   );
 };
