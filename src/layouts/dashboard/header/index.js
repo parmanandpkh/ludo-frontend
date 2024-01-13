@@ -18,7 +18,8 @@ const HEADER_DESKTOP = 92;
 
 const StyledRoot = styled(AppBar)(({ theme }) => ({
   ...bgBlur({ color: theme.palette.background.default }),
-  boxShadow: 'none',
+  boxShadow: 'none', 
+  backgroundColor:"#393976",
   [theme.breakpoints.up('lg')]: { width: `calc(100% - ${NAV_WIDTH + 1}px)` },
 }));
 
@@ -42,7 +43,7 @@ export default function Header({ onOpenNav }) {
           onClick={onOpenNav}
           sx={{
             mr: 1,
-            color: 'text.primary',
+            color: 'text.white',
             display: { lg: 'none' },
           }}
         >

@@ -1,18 +1,43 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, InputLabel, MenuItem, OutlinedInput, Paper, Select, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Paper,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useFormik, Form, FormikProvider, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { MESSAGE } from "../../utils/validationMessage";
-import { EMAIL_REGEX, MOBILE_REGEX, NOSPACE_REGEX, NOSPACE_REGEX_EMAIL, PASSWORDS_REGEX } from "../../utils/constants";
+import {
+  EMAIL_REGEX,
+  MOBILE_REGEX,
+  NOSPACE_REGEX,
+  NOSPACE_REGEX_EMAIL,
+  PASSWORDS_REGEX,
+} from "../../utils/constants";
 import errorHandler from "../../utils/errorHandler";
 import apiUsers from "src/api/usersService";
 import JoditEditor from "jodit-react";
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required").matches(NOSPACE_REGEX, "Enter valid title").min(2, "Please enter atleast 2 characters").max(50, "Title must not be more than 50 characters "),
-  description: Yup.string().required("Description is required").matches(NOSPACE_REGEX, "Enter valid description").min(3, "Description must be at least 3 characters long"),
+  title: Yup.string()
+    .required("Title is required")
+    .matches(NOSPACE_REGEX, "Enter valid title")
+    .min(2, "Please enter atleast 2 characters")
+    .max(50, "Title must not be more than 50 characters "),
+  description: Yup.string()
+    .required("Description is required")
+    .matches(NOSPACE_REGEX, "Enter valid description")
+    .min(3, "Description must be at least 3 characters long"),
 });
 
 export default function AddCMS() {
@@ -49,7 +74,13 @@ export default function AddCMS() {
             </Typography>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Stack spacing={3}>
-                <TextField name="title" label="Title" {...getFieldProps("title")} error={Boolean(touched.title && errors.title)} helperText={touched.title && errors.title} />
+                <TextField
+                  name="title"
+                  label="Title"
+                  {...getFieldProps("title")}
+                  error={Boolean(touched.title && errors.title)}
+                  helperText={touched.title && errors.title}
+                />
                 <Field required name="description">
                   {(data) => {
                     console.log(data);
@@ -73,8 +104,8 @@ export default function AddCMS() {
                 </span>
 
                 <TextField
-                //   value={value}
-                //   onChange={(e) => setValue(e.target.value)}
+                  //   value={value}
+                  //   onChange={(e) => setValue(e.target.value)}
                   select // tell TextField to render select
                   label="Label"
                 >
@@ -87,7 +118,13 @@ export default function AddCMS() {
                 </TextField>
               </Stack>
 
-              <Button size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
+              <Button
+                size="large"
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+                sx={{ my: 2 }}
+              >
                 Add
               </Button>
               <Button

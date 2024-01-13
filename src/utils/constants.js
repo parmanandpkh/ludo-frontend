@@ -1,5 +1,5 @@
-export const API_BASE = 'https://instacouponapi.devtechnosys.tech/admin/';
-// export const API_BASE = "http://172.16.11.201:17164/api/"
+// export const API_BASE = 'https://ludo.devtechnosys.tech/admin/';
+export const API_BASE = "http://172.16.1.250:17177/admin/"
 
 // export const BASE_API = API_BASE + "/api";
 // export const MAIN_URL = BASE_API + "/api/admin";
