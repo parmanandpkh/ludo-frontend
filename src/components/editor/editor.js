@@ -29,6 +29,7 @@ const EdiorJodit = (props) => {
       buttons: [
         "bold",
         "italic",
+        "strikethrough",
         "|",
         "ul",
         "ol",
@@ -37,10 +38,15 @@ const EdiorJodit = (props) => {
         "paragraph",
         "underline",
         "hr",
+        "brush",
+        "link",
+        "fullsize",
+        
       ],
       buttonsLG: [
         "bold",
         "italic",
+        "strikethrough",
         "|",
         "ul",
         "ol",
@@ -49,10 +55,15 @@ const EdiorJodit = (props) => {
         "paragraph",
         "underline",
         "hr",
+        "brush",
+        "link",
+        "fullsize",
+        
       ],
       buttonsMD: [
         "bold",
         "italic",
+        "strikethrough",
         "|",
         "ul",
         "ol",
@@ -61,10 +72,15 @@ const EdiorJodit = (props) => {
         "paragraph",
         "underline",
         "hr",
+        "brush",
+        "link",
+        "fullsize",
+        
       ],
       buttonsSM: [
         "bold",
         "italic",
+        "strikethrough",
         "|",
         "ul",
         "ol",
@@ -73,10 +89,15 @@ const EdiorJodit = (props) => {
         "paragraph",
         "underline",
         "hr",
+        "brush",
+        "link",
+        "fullsize",
+        
       ],
       buttonsXS: [
         "bold",
         "italic",
+        "strikethrough",
         "|",
         "ul",
         "ol",
@@ -85,6 +106,10 @@ const EdiorJodit = (props) => {
         "paragraph",
         "underline",
         "hr",
+        "brush",
+        "link",
+        "fullsize",
+        
       ],
 
       // toolbarAdaptive: true,
