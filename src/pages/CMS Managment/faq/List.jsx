@@ -205,7 +205,6 @@ function FaqList() {
             ),
         },
     ];
-    const classes = useStyle();
 
 
     const handleDelete = async () => {
@@ -267,7 +266,7 @@ function FaqList() {
             </CardContent>
             <ViewModal open={open} setOpen={setOpen} data={propData} />
             <ConfirmModal
-                warning={"Are you sure want to delete the faq"}
+                warning={"Are you sure want to delete the faq?"}
                 show={openConfirmModal}
                 setShow={setConfirmModal}
                 handleDelete={handleDelete}

@@ -11,6 +11,7 @@ import * as Yup from "yup"
 
 const CommonEditPage = ({ navigateUrl, title, slugname }) => {
     const REMOVEHTML = /(<([^>]+)>)/gi;
+    const REMOVENBSP = /&nbsp;/g
     const navigate = useNavigate()
 
     const formik = useFormik({
@@ -83,11 +84,13 @@ const CommonEditPage = ({ navigateUrl, title, slugname }) => {
                                             onChange={(html) => {
                                                 formik.setFieldTouched("decription", true)
                                                 let withoutHtml = html.replace(REMOVEHTML, "")
-                                                if (withoutHtml.length > 0) {
+                                                withoutHtml = withoutHtml?.replace(REMOVENBSP, '')
+                                                if (withoutHtml?.trim()?.length > 0) {
                                                     formik.setFieldValue("description", html)
+                                                    formik.setFieldTouched("description", true)
                                                 } else {
                                                     formik.setFieldValue("description", "")
-
+                                                    formik.setFieldTouched("description", true)
                                                 }
                                             }}
                                             data={formik.values.description}

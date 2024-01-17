@@ -55,8 +55,8 @@ const FaqEdit = () => {
 
         },
         validationSchema: Yup.object({
-            title: Yup.string().required("Question is required"),
-            description: Yup.string().required("Answer is required"),
+            title: Yup.string().required("Question is required").trim(),
+            description: Yup.string().required("Answer is required").trim(),
         }),
         onSubmit: (values) => {
             handleSumbit(values)
