@@ -1,16 +1,25 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LockResetIcon from '@mui/icons-material/LockReset';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LockResetIcon from "@mui/icons-material/LockReset";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
-import { toast } from "react-toastify"
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Divider,
+  Typography,
+  Stack,
+  MenuItem,
+  Avatar,
+  IconButton,
+  Popover,
+} from "@mui/material";
+import { toast } from "react-toastify";
 // mocks_
-import account from '../../../_mock/account';
-import { logout } from '../../../features/AuthSlice';
+import account from "../../../_mock/account";
+import { logout } from "../../../features/AuthSlice";
 
 const MENU_OPTIONS = [
   // { label: 'Home', icon: 'eva:home-fill' },
@@ -18,13 +27,12 @@ const MENU_OPTIONS = [
   // { label: 'Settings', icon: 'eva:settings-2-fill' },
 ];
 
-
-export default function AccountPopover() {
+export default function AccountPopover({ adminDetails }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const email = localStorage.getItem("email")
-  const name = localStorage.getItem("name")
-    const [open, setOpen] = useState(null);
+  const email = localStorage.getItem("email");
+  const name = localStorage.getItem("name");
+  const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -36,13 +44,13 @@ export default function AccountPopover() {
 
   const handleLogout = () => {
     dispatch(logout());
-    toast.success('You have been successfully logged out')
+    toast.success("You have been successfully logged out");
     localStorage.clear();
-    navigate('/login', { replace: true });
-  }
-  const handleSetting = ()=>{
-    navigate('/global-setting')
-  }
+    navigate("/login", { replace: true });
+  };
+  const handleSetting = () => {
+    navigate("/global-setting");
+  };
 
   return (
     <>
@@ -51,13 +59,13 @@ export default function AccountPopover() {
         sx={{
           p: 0,
           ...(open && {
-            '&:before': {
+            "&:before": {
               zIndex: 1,
               content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
+              width: "100%",
+              height: "100%",
+              borderRadius: "50%",
+              position: "absolute",
               bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
             },
           }),
@@ -70,16 +78,16 @@ export default function AccountPopover() {
         open={Boolean(open)}
         anchorEl={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
           sx: {
             p: 0,
             mt: 1.5,
             ml: 0.75,
             width: 180,
-            '& .MuiMenuItem-root': {
-              typography: 'body2',
+            "& .MuiMenuItem-root": {
+              typography: "body2",
               borderRadius: 0.75,
             },
           },
@@ -87,10 +95,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {adminDetails.name}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {email}
+          <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+            {adminDetails?.email}
           </Typography>
         </Box>
 
@@ -104,27 +112,31 @@ export default function AccountPopover() {
           ))}
         </Stack> */}
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
-        <MenuItem onClick={() => {
-          handleClose()
-          navigate('/change-password')
-        }} >
-          <LockResetIcon sx={{mr:2}}/>{" "}Change Password
+        <Divider sx={{ borderStyle: "dashed" }} />
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate("/change-password");
+          }}
+        >
+          <LockResetIcon sx={{ mr: 2 }} /> Change Password
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleClose()
-          handleSetting()
-        }}>
-          <SettingsIcon sx={{mr:2}}/>{" "}Settings
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            handleSetting();
+          }}
+        >
+          <SettingsIcon sx={{ mr: 2 }} /> Settings
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleClose()
-          handleLogout()
-        }} >
-          
-         <LogoutIcon sx={{mr:2}}/>{" "}Logout
-        </MenuItem>
-       
+        {/* <MenuItem
+          onClick={() => {
+            handleClose();
+            handleLogout();
+          }}
+        >
+          <LogoutIcon sx={{ mr: 2 }} /> Logout
+        </MenuItem> */}
       </Popover>
     </>
   );

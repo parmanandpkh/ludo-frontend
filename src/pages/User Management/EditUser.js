@@ -32,22 +32,22 @@ import CardLayout from "src/layouts/CardLayout";
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
     .required("FirstName is required")
-    .matches(NOSPACE_REGEX)
+    .trim()
     .min(2, "Please enter atleast 2 characters")
-    .max(30, "FirstName character not more 30"),
+    .max(50, "First name must not be more than 50 characters "),
   lastName: Yup.string()
     .required("LastName is required")
-    .matches(NOSPACE_REGEX)
+    .trim()
     .min(2, "Please enter atleast 2 characters")
-    .max(30, "LastName character not more 30"),
+    .max(50, "Last name must not be more than 50 characters "),
   phoneNumber: Yup.string()
     .required("Phone Number is required")
     .matches(MOBILE_REGEX, MESSAGE.PHONE),
   email: Yup.string()
     .required("Email  is required")
     .matches(NOSPACE_REGEX, "Space not applied")
-    .test("is-email", "Invalid email address", (val) => complexEmailRegex(val))
-    .max(255),
+    .trim()
+    .test("is-email", "Invalid email", (val) => complexEmailRegex(val)),
 });
 
 export default function EditUser() {
@@ -97,11 +97,10 @@ export default function EditUser() {
 
   return (
     <>
-   <CardLayout>
-        <CardHeader title="Add User" />
+      <CardLayout>
+        <CardHeader title="Edit User" />
         <CardContent>
           <FormikProvider value={formik} style={{ padding: "34px 30px" }}>
-            
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3} direction={"column"} xs={12} md={6}>
                 <Grid item xs={12}>

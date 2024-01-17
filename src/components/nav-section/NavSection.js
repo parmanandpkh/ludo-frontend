@@ -67,7 +67,6 @@ function NavItem({ item }) {
   const { title, path, icon, info, children,noClass } = item;
   const location = useLocation();
   const dispatch = useDispatch();
-  console.log(location);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -80,7 +79,6 @@ function NavItem({ item }) {
     localStorage.clear();
     navigate("/login", { replace: true });
   };
-  console.log("opem", open);
   const classes = useStyle();
 
   return (
