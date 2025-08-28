@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master   # same as only: master in GitLab
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, ludo]   # or [self-hosted, Linux, X64]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy to server
+        run: |
+          echo "welcome1"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+          chmod 400 ssh_key
+          ssh -i ssh_key -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd ${{ secrets.WORK_DIR }} && \
+            git pull origin master && \
+            rm -rf build && \
+            npm run build && \
+            cp .htaccess build/"
+  
+  resolve_deploy:
+    runs-on: [self-hosted, ludo]
+    needs: deploy
+    if: failure()   # same as when: on_failure in GitLab
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Resolve and redeploy
+        run: |
+          echo "resolve_deploy"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+          chmod 400 ssh_key
+          ssh -i ssh_key -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd ${{ secrets.WORK_DIR }} && \
+            git add . && \
+            git commit -m 'Automatically resolve merge conflict' || true && \
+            git pull origin master && \
+            rm -rf build && \
+            npm run build && \
+            cp .htaccess build/"
