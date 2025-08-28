@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, ludo]   # or [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64]   # or [self-hosted, Linux, X64]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
             cp .htaccess build/"
   
   resolve_deploy:
-    runs-on: [self-hosted, ludo]
+    runs-on: [self-hosted, Linux, X64]
     needs: deploy
     if: failure()   # same as when: on_failure in GitLab
     steps:
